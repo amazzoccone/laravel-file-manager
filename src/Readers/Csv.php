@@ -8,15 +8,11 @@ class Csv extends Reader
     const VALUE_DELIMITER = ',';
 
     /**
-     * Get the file's header
-     *
-     * @param $file
      * @return array
      */
-    public function getHeader($file)
+    public function getHeader()
     {
-        $firstLine = $this->getFirstLine($file);
-        return explode(self::VALUE_DELIMITER, $firstLine);
+        return explode(self::VALUE_DELIMITER, $this->getFirstLine());
     }
 
     /**
@@ -45,43 +41,46 @@ class Csv extends Reader
 
 
     /**
-     * @param $file
-     * @param $chunkSize
      * @param \Closure $closureToProcessLines
+     * @param $chunkSize
      * @return void
      */
-    public function processFileInChunks($file, $chunkSize, \Closure $closureToProcessLines)
+    public function process(\Closure $closureToProcessLines, $chunkSize)
     {
-
-        $header = $this->getHeader($file);
+        $header = $this->getHeader();
         $headerSize = count($header);
 
-        $arrayLines = collect();
-        while ($line = fgetcsv($file, 0, self::VALUE_DELIMITER)) {
-
-            if(count($line) === $headerSize){
-                $arrayLines->push(array_combine($header, $line));
+        $lines = collect();
+        while ($line = fgetcsv($this->file, 0, self::VALUE_DELIMITER)) {
+            if ($chunkSize == 1) {
+                $closureToProcessLines($line);
             }
+            else {
+                if(count($line) === $headerSize){
+                    $lines->push(array_combine($header, $line));
+                }
 
-            if ($arrayLines->count() == $chunkSize) {
-                $closureToProcessLines($arrayLines);
-                $arrayLines = collect();
+                if ($lines->count() == $chunkSize) {
+                    $closureToProcessLines($lines);
+                    $lines = collect();
+                }
             }
         }
 
-        if ($arrayLines->count()) {
-            $closureToProcessLines($arrayLines);
+        //process last lines (smaller than $chunkSize)
+        if ($lines->count()) {
+            $closureToProcessLines($lines);
         }
 
-        rewind($file);
+        rewind($this->file);
     }
 
     /**
      * @param $file
      * @return int
      */
-    public function getTotalRowsOfFile($file)
+    public function totalLines($file)
     {
-        return parent::getTotalRowsOfFile($file) - 1; // Subtract header
+        return parent::totalLines($file) - 1; // Subtract header
     }
 }

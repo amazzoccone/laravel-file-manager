@@ -12,13 +12,20 @@ abstract class Reader
     protected $file;
 
     /**
+     * Reader constructor.
+     */
+    public function __construct()
+    {
+        // Fix macOS files
+        ini_set('auto_detect_line_endings', true);
+    }
+
+    /**
      * @param string $filepath
      * @return $this
      */
     public function open(string $filepath)
     {
-        // Fix macOS files
-        ini_set('auto_detect_line_endings', true);
         $this->file = fopen($filepath, "r");
 
         return $this;
@@ -58,11 +65,9 @@ abstract class Reader
     }
 
     /**
-     * Get the rows of the file to process
-     *
      * @return int
      */
-    public function getTotalRowsOfFile()
+    public function totalLines()
     {
         $this->assertHasFile();
         // FIXME: How can we optimize this function?!
@@ -76,8 +81,6 @@ abstract class Reader
     }
 
     /**
-     * Check if file is empty
-     *
      * @return bool
      */
     public function isEmpty()
@@ -88,7 +91,7 @@ abstract class Reader
     }
 
     /**
-     * Check if has exists the specified line in the file
+     * Check if has the exactly specified line
      *
      * @param $line
      * @return bool
