@@ -7,11 +7,12 @@ use Bondacom\LaravelFileManager\Utilities\Utility;
 class Writer extends Utility
 {
     /**
+     * @param string $filepath
      * @return mixed
      */
-    public function new()
+    public function new(string $filepath)
     {
-        return $this->getStrategy()->new();
+        return $this->getStrategy()->new($filepath);
     }
 
     /**

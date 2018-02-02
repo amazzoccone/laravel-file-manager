@@ -4,6 +4,9 @@ namespace Bondacom\LaravelFileManager\Readers;
 
 abstract class Reader
 {
+    /**
+     * @var File Pointer
+     */
     protected $file;
 
     /**
@@ -18,18 +21,19 @@ abstract class Reader
 
         return $this;
     }
+
     /**
-     * @param $file
-     * @param $chunkSize
      * @param \Closure $closureToProcessLines
+     * @param int $chunkSize
      * @return void
      */
-    public function process($file, $chunkSize, \Closure $closureToProcessLines)
+    public function process(\Closure $closureToProcessLines, $chunkSize = 1)
     {
-        rewind($file);
+        //TODO: Check if has file
+        rewind($this->file);
 
         $lines = collect();
-        while ($line = fgets($file)) {
+        while ($line = fgets($this->file)) {
             if ($chunkSize == 1) {
                 $closureToProcessLines($line);
             }
@@ -48,7 +52,7 @@ abstract class Reader
             $closureToProcessLines($lines);
         }
 
-        rewind($file);
+        rewind($this->file);
     }
 
     /**

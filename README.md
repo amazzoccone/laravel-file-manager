@@ -30,7 +30,7 @@ It's really simple!
 **Example** - Read a file using default config:
 
 ```
-Reader::process($file, function($line) {
+Reader::open($file)->process(function($line) {
     // Do what you need here
 });
 ```
@@ -38,15 +38,15 @@ Reader::process($file, function($line) {
 **Example** - Read a file overriding default config chunk value:
 
 ```
-Reader::process($file, 1000, function($lines) {
+Reader::open($file)->process(function($lines) {
     // Do what you need here
-});
+}, 1000);
 ```
 
 **Example** - Read a file as csv:
 
 ```
-Reader::csv()->process(function($line) {
+Reader::csv()->open($file)->process(function($line) {
     // Do what you need here
 });
 ```
