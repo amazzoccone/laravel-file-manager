@@ -7,18 +7,30 @@ use Bondacom\LaravelFileManager\Utilities\Utility;
 class Reader extends Utility
 {
     /**
-     * @return mixed
+     * @param string $filepath
+     * @return \Bondacom\LaravelFileManager\Readers\Reader
      */
-    public function process()
+    public function open($filepath)
     {
-        return $this->getStrategy()->process();
+        return $this->getStrategy()->open($filepath);
+    }
+
+    /**
+     * @param $name
+     * @param $arguments
+     * @return mixed
+     * @throws \Exception
+     */
+    public function __call($name, $arguments)
+    {
+        $this->config(['handler' => $name]);
     }
 
     /**
      * @return \Illuminate\Foundation\Application|mixed
      * @throws \Exception
      */
-    public function getStrategy()
+    protected function getStrategy()
     {
         $type = $this->config('handler');
 

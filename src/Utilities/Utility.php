@@ -20,11 +20,24 @@ class Utility
     }
 
     /**
-     * @param string $key
-     * @return mixed|null
+     * @param string|array $data
+     * @return mixed|boolean
      */
-    public function config(string $key)
+    public function config($data)
     {
-        return $this->config[$key] ?? null;
+        if (is_array($data)) {
+            reset($data);
+            $attribute = key($data);
+            $value = current($data);
+
+            if (array_key_exists($attribute, $this->config)) {
+                $this->config[$attribute] = $value;
+                return true;
+            }
+            return false;
+        }
+
+
+        return $this->config[$data] ?? null;
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Bondacom\LaravelFileManager\Tests\Unit;
+namespace Bondacom\LaravelFileManager\Tests\Feature;
 
 use Bondacom\LaravelFileManager\Tests\TestCase;
 
-class ReaderTest extends TestCase
+class WriterTest extends TestCase
 {
     public function testAssertTrue()
     {

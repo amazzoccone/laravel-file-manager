@@ -4,6 +4,20 @@ namespace Bondacom\LaravelFileManager\Readers;
 
 abstract class Reader
 {
+    protected $file;
+
+    /**
+     * @param string $filepath
+     * @return $this
+     */
+    public function open(string $filepath)
+    {
+        // Fix macOS files
+        ini_set('auto_detect_line_endings', true);
+        $this->file = fopen($filepath, "r");
+
+        return $this;
+    }
     /**
      * @param $file
      * @param $chunkSize

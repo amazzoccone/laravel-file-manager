@@ -51,14 +51,6 @@ Reader::csv()->process(function($line) {
 });
 ```
 
-**Example** - Read a file using a custom handler
-
-```
-Reader::use($customHandler)->process(function($line) {
-    // Do what you need here
-});
-```
-
 **Example** - Write a file
 
 ```
