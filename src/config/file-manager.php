@@ -12,21 +12,25 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Default handler
+    | Reader utility
     |--------------------------------------------------------------------------
     |
-    | If empty it will process like a txt
-    | Options: csv
+    | Handler: Default reader type. Options: csv|txt
+    | Chunk: Default number of lines to return in callback.
     */
-    'defaultHandler' => '',
+    'reader' => [
+        'handler' => 'txt',
+        'chunk' => 1
+    ],
 
     /*
     |--------------------------------------------------------------------------
-    | Default chunk
+    | Writer utility
     |--------------------------------------------------------------------------
     |
-    | Number of lines to return in callback
-    |
+    | Chunk: Default number of lines to return in callback.
     */
-    'defaultChunk' => 1
+    'writer' => [
+        'handler' => 'txt'
+    ],
 ];

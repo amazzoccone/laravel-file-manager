@@ -5,11 +5,11 @@ namespace Bondacom\LaravelFileManager\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * Class Antenna
- * @see \Bondacom\LaravelFileManager\File
+ * Class Reader
+ * @see \Bondacom\LaravelFileManager\Utilities\Reader
  *
  */
-class File extends Facade
+class Reader extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -18,6 +18,6 @@ class File extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'File';
+        return 'Reader';
     }
 }
