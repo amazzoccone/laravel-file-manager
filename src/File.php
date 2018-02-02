@@ -5,10 +5,34 @@ namespace Bondacom\LaravelFileManager;
 class File
 {
     /**
-     * File constructor.
+     * @var array
      */
-    public function __construct()
+    private $config;
+
+    /**
+     * File constructor.
+     * @param array $config
+     */
+    public function __construct(array $config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * 
+     */
+    public function process()
     {
         //
+    }
+
+    /**
+     *
+     */
+    public function __call()
+    {
+        //Check for handlers
+
+        return $this;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Bondacom\LaravelFileManager\Providers;
 
+use Bondacom\LaravelFileManager\File;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelFileManagerServiceProvider extends ServiceProvider
@@ -13,7 +14,9 @@ class LaravelFileManagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->publishes([
+            __DIR__ . '/../config/file-manager.php' => config_path('file-manager.php'),
+        ]);
     }
 
     /**
@@ -23,6 +26,13 @@ class LaravelFileManagerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/file-manager.php', 'file-manager'
+        );
+        $config = config('file-manager');
+        $this->app->bind('File', function ($app) use ($config) {
+            return new File($config);
+        });
+
     }
 }
