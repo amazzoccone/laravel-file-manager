@@ -1,35 +1,70 @@
 # Laravel File Manager
-Description of the package.
 
-# Installation
+###### [FAQ](#faq) | [Contributing](https://github.com/bondacom/laravel-file-manager/blob/master/CONTRIBUTING.md)
 
-Add this to your project's `composer.json` file
+> It's a Laravel library which provides an efficient way to read or create enormous files.
 
-```json
-{
-    "config":{
-        "secure-http":false
-    },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "http://packages.internal.bondacom.com"
-        }
-    ]
-}
+## Getting Started
+
+### Installation
+
+> *Note: It requires at least PHP v7.1.*
+
+To use package in your Laravel project, run:
+```
+composer require bondacom/laravel-file-manager
 ```
 
-Then execute `composer require bondacom/laravel-file-manager=~1.0` command.
+> **Note**: For Laravel less than 5.5 remember to register manually the service provider!
 
-Register the service provider in `config/app.php`
-
+### Configuration
+Copy the config file into your project by running
 ```
-    'providers' => [
-        /*
-         * Application Service Providers...
-         */
-        Bondacom\LaravelFileManager\Providers\ResponsesServiceProvider::class,
-    ]
+php artisan vendor:publish --provider="Bondacom\LaravelFileManager\Providers\LaravelFileManagerServiceProvider"
 ```
 
-# Usage
+### Usage
+
+It's really simple!
+
+**Example** - Read a file in chunks:
+
+```
+File::process(1000, function($lines) {
+    // Do what you need here
+});
+```
+
+**Example** - Read a file line by line:
+
+```
+File::process(function($line) {
+    // Do what you need here
+});
+```
+
+**Example** - Read a file as csv:
+
+```
+File::csv()->process(function($line) {
+    // Do what you need here
+});
+```
+
+**Example** - Read a file using a custom handler
+
+```
+File::use($customHandler)->process(function($line) {
+    // Do what you need here
+});
+```
+
+## Contributing
+
+Check out [contributing guide](https://github.com/bondacom/laravel-file-manager/blob/master/CONTRIBUTING.md) to get an overview of development.
+
+# FAQ
+
+#### Q: Which PHP and Laravel version does use?
+
+Look for [composer.json](https://github.com/bondacom/laravel-file-manager/blob/master/composer.json).
