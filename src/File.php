@@ -2,10 +2,10 @@
 
 namespace Bondacom\LaravelFileManager;
 
-class LaravelFileManager
+class File
 {
     /**
-     * LaravelFileManager constructor.
+     * File constructor.
      */
     public function __construct()
     {
