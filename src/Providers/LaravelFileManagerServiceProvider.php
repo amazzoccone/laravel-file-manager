@@ -2,9 +2,9 @@
 
 namespace Bondacom\LaravelFileManager\Providers;
 
-use App\Utilities\File\Writer;
 use Bondacom\LaravelFileManager\File;
-use Bondacom\LaravelFileManager\Utilities\Reader;
+use Bondacom\LaravelFileManager\Reader;
+use Bondacom\LaravelFileManager\Writer;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelFileManagerServiceProvider extends ServiceProvider

@@ -27,18 +27,18 @@ php artisan vendor:publish --provider="Bondacom\LaravelFileManager\Providers\Lar
 
 It's really simple!
 
-**Example** - Read a file in chunks:
+**Example** - Read a file using default config:
 
 ```
-File::process(1000, function($lines) {
+Reader::process($file, function($line) {
     // Do what you need here
 });
 ```
 
-**Example** - Read a file line by line:
+**Example** - Read a file overriding default config chunk value:
 
 ```
-File::process(function($line) {
+Reader::process($file, 1000, function($lines) {
     // Do what you need here
 });
 ```
@@ -46,7 +46,7 @@ File::process(function($line) {
 **Example** - Read a file as csv:
 
 ```
-File::csv()->process(function($line) {
+Reader::csv()->process(function($line) {
     // Do what you need here
 });
 ```
@@ -54,9 +54,18 @@ File::csv()->process(function($line) {
 **Example** - Read a file using a custom handler
 
 ```
-File::use($customHandler)->process(function($line) {
+Reader::use($customHandler)->process(function($line) {
     // Do what you need here
 });
+```
+
+**Example** - Write a file
+
+```
+$writer = Writer::new($file)
+$writer->add('Hello');
+$writer->add('World');
+$writer->save();
 ```
 
 ## Contributing

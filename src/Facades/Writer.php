@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * Class Writer
- * @see \Bondacom\LaravelFileManager\Utilities\Writer
+ * @see \Bondacom\LaravelFileManager\Writer
  *
  */
 class Writer extends Facade

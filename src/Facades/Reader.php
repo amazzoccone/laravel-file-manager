@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * Class Reader
- * @see \Bondacom\LaravelFileManager\Utilities\Reader
+ * @see \Bondacom\LaravelFileManager\Reader
  *
  */
 class Reader extends Facade
