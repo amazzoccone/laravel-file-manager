@@ -18,12 +18,14 @@ class Reader extends Utility
     /**
      * @param $name
      * @param $arguments
-     * @return mixed
+     * @return $this
      * @throws \Exception
      */
     public function __call($name, $arguments)
     {
         $this->config(['handler' => $name]);
+
+        return $this;
     }
 
     /**
