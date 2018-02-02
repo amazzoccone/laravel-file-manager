@@ -31,6 +31,6 @@ return [
     | Chunk: Default number of lines to return in callback.
     */
     'writer' => [
-        'handler' => 'txt'
+        'handler' => 'inform'
     ],
 ];

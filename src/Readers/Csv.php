@@ -2,8 +2,6 @@
 
 namespace Bondacom\LaravelFileManager\Readers;
 
-use Bondacom\LaravelFileManager\Utilities\Reader;
-
 //TODO: Should implement an interface
 class Csv extends Reader
 {
