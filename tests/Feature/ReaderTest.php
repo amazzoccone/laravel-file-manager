@@ -2,6 +2,7 @@
 
 namespace Bondacom\LaravelFileManager\Tests\Feature;
 
+use Bondacom\LaravelFileManager\Facades\Reader;
 use Bondacom\LaravelFileManager\Readers\Csv;
 use Bondacom\LaravelFileManager\Readers\Txt;
 use Bondacom\LaravelFileManager\Tests\TestCase;
@@ -39,8 +40,6 @@ class ReaderTest extends TestCase
      */
     public function it_should_throws_an_exception_if_reader_class_not_exists()
     {
-        $this->mock(Csv::class)->shouldReceive('open')->once()->andReturnSelf();
-
         $filepath = getcwd();
 
         $this->expectException(\Exception::class);

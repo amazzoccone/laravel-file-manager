@@ -15,6 +15,17 @@ class Writer extends Utility
     }
 
     /**
+     * @param $name
+     * @param $arguments
+     * @return mixed
+     * @throws \Exception
+     */
+    public function __call($name, $arguments)
+    {
+        $this->config(['handler' => $name]);
+    }
+
+    /**
      * @return \Illuminate\Foundation\Application|mixed
      * @throws \Exception
      */
@@ -24,7 +35,7 @@ class Writer extends Utility
 
         switch ($type) {
             case 'inform':
-                return app(\Bondacom\LaravelFileManager\Readers\Inform::class);
+                return app(\Bondacom\LaravelFileManager\Writers\Inform::class);
             default:
                 throw new \Exception("Writer Handler {$type} does not exists");
         }
