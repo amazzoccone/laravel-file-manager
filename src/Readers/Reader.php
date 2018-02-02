@@ -2,6 +2,8 @@
 
 namespace Bondacom\LaravelFileManager\Readers;
 
+use Bondacom\LaravelFileManager\Utilities\Bom;
+
 abstract class Reader
 {
     /**
@@ -29,7 +31,7 @@ abstract class Reader
      */
     public function process(\Closure $closureToProcessLines, $chunkSize = 1)
     {
-        //TODO: Check if has file
+        $this->assertHasFile();
         rewind($this->file);
 
         $lines = collect();
@@ -58,114 +60,99 @@ abstract class Reader
     /**
      * Get the rows of the file to process
      *
-     * @param $file
      * @return int
      */
-    public function getTotalRowsOfFile($file)
+    public function getTotalRowsOfFile()
     {
+        $this->assertHasFile();
         // FIXME: How can we optimize this function?!
-        rewind($file);
+        rewind($this->file);
         $rows = 0;
-        while (fgets($file)) {
+        while (fgets($this->file)) {
             $rows++;
         }
-        rewind($file);
+        rewind($this->file);
         return $rows;
     }
 
     /**
      * Check if file is empty
      *
-     * @param $file
      * @return bool
      */
-    public function isEmpty($file)
+    public function isEmpty()
     {
-        rewind($file);
-        return feof($file);
+        $this->assertHasFile();
+        rewind($this->file);
+        return feof($this->file);
     }
 
     /**
      * Check if has exists the specified line in the file
      *
-     * @param $file
      * @param $line
      * @return bool
      */
-    public function hasLine($file, $line)
+    public function hasLine($line)
     {
-        rewind($file);
+        $this->assertHasFile();
+        rewind($this->file);
         $lineFound = false;
-        while ($aLine = fgets($file) && !$lineFound) {
+        while ($aLine = fgets($this->file) && !$lineFound) {
             if ($aLine == $line) {
                 $lineFound = true;
             }
         }
 
-        rewind($file);
+        rewind($this->file);
         return $lineFound;
     }
 
     /**
      * Filter the file by a condition
      *
-     * @param $file
      * @param \Closure $filterCondition
      * @return \Illuminate\Support\Collection
      */
-    public function filterFile($file, \Closure $filterCondition)
+    public function filterFile(\Closure $filterCondition)
     {
-        rewind($file);
+        $this->assertHasFile();
+        rewind($this->file);
         $filteredLines = collect();
 
-        while ($line = fgets($file)) {
+        while ($line = fgets($this->file)) {
             if ($filterCondition($line)) {
                 $filteredLines->push($line);
             }
         }
 
-        rewind($file);
+        rewind($this->file);
         return $filteredLines;
     }
 
     /**
-     * Get the file's first line
-     *
-     * @param $file
-     * @return array
+     * @return string
      */
-    public function getFirstLine($file)
+    public function getFirstLine()
     {
-        rewind($file);
-        $firstLine = trim(fgets($file));
-        $firstLine = $this->detectAndRemoveBOM($firstLine);
+        $this->assertHasFile();
+        rewind($this->file);
+        $firstLine = trim(fgets($this->file));
+        $firstLine = app(Bom::class)->filter($firstLine);
 
         return $firstLine;
     }
 
     /**
-     * Detect if $string has BOM character and removes it
-     *
-     * @param $string
-     * @return mixed
+     * @throws \Exception
+     * @return $this
      */
-    public function detectAndRemoveBOM($string)
+    private function assertHasFile()
     {
-        if ($this->hasBOMCharacter($string)) {
-            $string = substr($string, 3);
+        if (!$this->file) {
+            throw new \Exception("You must first open file");
         }
 
-        return $string;
-    }
-
-    /**
-     * Check if $string has BOM character
-     *
-     * @param $string
-     * @return bool
-     */
-    public function hasBOMCharacter($string)
-    {
-        return substr($string, 0, 3) == "\xef\xbb\xbf";
+        return $this;
     }
 }
