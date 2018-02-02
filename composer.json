@@ -1,0 +1,21 @@
+{
+  "name": "bondacom/laravel-file-manager",
+  "description": "File manager for Laravel.",
+  "require": {
+    "php": "^7.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~6.0",
+    "orchestra/testbench": "~3.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Bondacom\\LaravelFileManager\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Bondacom\\LaravelFileManager\\Tests\\": "tests/"
+    }
+  }
+}
