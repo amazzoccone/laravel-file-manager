@@ -57,7 +57,8 @@ class Csv extends Reader
                 $closureToProcessLines($line);
             }
             else {
-                if(count($line) === $headerSize){
+                //process only lines with same amount of columns as header
+                if(count($line) === $headerSize) {
                     $lines->push(array_combine($header, $line));
                 }
 
