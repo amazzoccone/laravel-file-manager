@@ -2,6 +2,7 @@
 
 namespace Bondacom\LaravelFileManager\Tests\Feature;
 
+use Bondacom\LaravelFileManager\Exceptions\WriterNotExistsException;
 use Bondacom\LaravelFileManager\Facades\Writer;
 use Bondacom\LaravelFileManager\Tests\TestCase;
 use Bondacom\LaravelFileManager\Writers\Inform;
@@ -13,7 +14,9 @@ class WriterTest extends TestCase
      */
     public function it_should_instance_default_writer_class()
     {
-        $this->mock(Inform::class)->shouldReceive('new')->once()->andReturnSelf();
+        $mock = $this->mock(Inform::class)
+            ->shouldReceive('setConfig')->once()->andReturnSelf()
+            ->shouldReceive('new')->once()->andReturnSelf();
 
         $filepath = getcwd();
         $reader = Writer::new($filepath);
@@ -26,7 +29,9 @@ class WriterTest extends TestCase
      */
     public function it_should_instance_other_writer_class()
     {
-        $this->mock(Inform::class)->shouldReceive('new')->once()->andReturnSelf();
+        $this->mock(Inform::class)
+            ->shouldReceive('setConfig')->once()->andReturnSelf()
+            ->shouldReceive('new')->once()->andReturnSelf();
 
         $filepath = getcwd();
         $reader = Writer::inform()->new($filepath);
@@ -41,25 +46,7 @@ class WriterTest extends TestCase
     {
         $filepath = getcwd();
 
-        $this->expectException(\Exception::class);
-        config(['file-manager.writer.handler' => 'rrr']);
-        Writer::new($filepath);
-
-        $this->expectException(\Exception::class);
+        $this->expectException(WriterNotExistsException::class);
         Writer::csb()->new($filepath);
-    }
-
-    /**
-     * @test
-     */
-    public function it_should_pass_config_to_writer_class()
-    {
-        $this->mock(Inform::class)->shouldReceive('new')->once()->andReturnSelf();
-
-        $config = config('file-manager.writer.default');
-        $filepath = getcwd();
-        $reader = Writer::new($filepath);
-
-        $this->assertEquals($reader->config(), $config);
     }
 }

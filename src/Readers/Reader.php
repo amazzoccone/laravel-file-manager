@@ -18,7 +18,7 @@ abstract class Reader
      * Reader constructor.
      * @param array $config
      */
-    public function __construct(array $config)
+    public function __construct(array $config = [])
     {
         $this->config = $config;
 
@@ -44,7 +44,7 @@ abstract class Reader
      */
     public function process(\Closure $closureToProcessLines, $chunkSize = null)
     {
-        $chunkSize = $chunkSize ?: $this->config('chunk');
+        $chunkSize = $chunkSize ?: $this->config('chunk', 1);
 
         $this->assertHasFile();
         rewind($this->file);

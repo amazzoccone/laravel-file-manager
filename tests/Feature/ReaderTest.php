@@ -2,6 +2,7 @@
 
 namespace Bondacom\LaravelFileManager\Tests\Feature;
 
+use Bondacom\LaravelFileManager\Exceptions\ReaderNotExistsException;
 use Bondacom\LaravelFileManager\Facades\Reader;
 use Bondacom\LaravelFileManager\Readers\Csv;
 use Bondacom\LaravelFileManager\Readers\Txt;
@@ -14,7 +15,9 @@ class ReaderTest extends TestCase
      */
     public function it_should_instance_default_reader_class()
     {
-        $this->mock(Txt::class)->shouldReceive('open')->once()->andReturnSelf();
+        $this->mock(Txt::class)
+            ->shouldReceive('setConfig')->once()->andReturnSelf()
+            ->shouldReceive('open')->once()->andReturnSelf();
 
         $filepath = getcwd();
         $reader = Reader::open($filepath);
@@ -27,7 +30,9 @@ class ReaderTest extends TestCase
      */
     public function it_should_instance_other_reader_class()
     {
-        $this->mock(Csv::class)->shouldReceive('open')->once()->andReturnSelf();
+        $this->mock(Csv::class)
+            ->shouldReceive('setConfig')->once()->andReturnSelf()
+            ->shouldReceive('open')->once()->andReturnSelf();
 
         $filepath = getcwd();
         $reader = Reader::csv()->open($filepath);
@@ -42,25 +47,7 @@ class ReaderTest extends TestCase
     {
         $filepath = getcwd();
 
-        $this->expectException(\Exception::class);
-        config(['file-manager.reader.handler' => 'rrr']);
-        Reader::open($filepath);
-
-        $this->expectException(\Exception::class);
+        $this->expectException(ReaderNotExistsException::class);
         Reader::csb()->open($filepath);
-    }
-
-    /**
-     * @test
-     */
-    public function it_should_pass_config_to_reader_class()
-    {
-        $this->mock(Txt::class)->shouldReceive('open')->once()->andReturnSelf();
-
-        $config = config('file-manager.reader.default');
-        $filepath = getcwd();
-        $reader = Reader::open($filepath);
-
-        $this->assertEquals($reader->config(), $config);
     }
 }

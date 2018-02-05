@@ -18,24 +18,23 @@ class Csv extends Reader
     /**
      * Get the values from specified column
      *
-     * @param $file
      * @param $column
      * @return \Illuminate\Support\Collection
      */
-    public function pluckFile($file, $column)
+    public function pluckFile($column)
     {
         $pluckedCollection = collect();
 
-        rewind($file);
-        if (false === $pos = array_search($column, $this->getHeader($file))) {
+        rewind($this->file);
+        if (false === $pos = array_search($column, $this->getHeader())) {
             return $pluckedCollection;
         }
 
-        while ($arrayLine = fgetcsv($file, 0, self::VALUE_DELIMITER)) {
+        while ($arrayLine = fgetcsv($this->file, 0, self::VALUE_DELIMITER)) {
             $pluckedCollection->push($arrayLine[$pos]);
         }
 
-        rewind($file);
+        rewind($this->file);
         return $pluckedCollection;
     }
 
@@ -45,8 +44,10 @@ class Csv extends Reader
      * @param $chunkSize
      * @return void
      */
-    public function process(\Closure $closureToProcessLines, $chunkSize)
+    public function process(\Closure $closureToProcessLines, $chunkSize = null)
     {
+        $chunkSize = $chunkSize ?: $this->config('chunk', 1);
+
         $header = $this->getHeader();
         $headerSize = count($header);
 
@@ -76,11 +77,10 @@ class Csv extends Reader
     }
 
     /**
-     * @param $file
      * @return int
      */
-    public function totalLines($file)
+    public function totalLines()
     {
-        return parent::totalLines($file) - 1; // Subtract header
+        return parent::totalLines() - 1; // Subtract header
     }
 }

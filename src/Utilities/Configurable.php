@@ -12,9 +12,10 @@ trait Configurable
 
     /**
      * @param string|array $data
-     * @return mixed|boolean
+     * @param null $defaultValue
+     * @return bool|mixed
      */
-    public function config($data = null)
+    public function config($data = null, $defaultValue = null)
     {
         if (is_null($data)) {
             return $this->config;
@@ -33,6 +34,17 @@ trait Configurable
         }
 
 
-        return $this->config[$data] ?? null;
+        return $this->config[$data] ?? $defaultValue;
+    }
+
+    /**
+     * @param array $config
+     * @return $this
+     */
+    public function setConfig(array $config)
+    {
+        $this->config = $config;
+
+        return $this;
     }
 }

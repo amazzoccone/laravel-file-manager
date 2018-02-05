@@ -1,6 +1,6 @@
 <?php
 
-namespace Bondacom\Antenna\Exceptions;
+namespace Bondacom\LaravelFileManager\Exceptions;
 
 use Throwable;
 
