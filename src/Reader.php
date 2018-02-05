@@ -17,21 +17,8 @@ class Reader extends Utility
     }
 
     /**
-     * @param $name
-     * @param $arguments
-     * @return $this
-     * @throws \Exception
-     */
-    public function __call($name, $arguments)
-    {
-        $this->config(['handler' => $name]);
-
-        return $this;
-    }
-
-    /**
      * @return \Illuminate\Foundation\Application|mixed
-     * @throws \Exception
+     * @throws ReaderNotExistsException
      */
     protected function getStrategy()
     {

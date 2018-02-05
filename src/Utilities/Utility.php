@@ -2,13 +2,9 @@
 
 namespace Bondacom\LaravelFileManager\Utilities;
 
-
-class Utility
+abstract class Utility
 {
-    /**
-     * @var array
-     */
-    private $config;
+    use Configurable;
 
     /**
      * File constructor.
@@ -20,24 +16,20 @@ class Utility
     }
 
     /**
-     * @param string|array $data
-     * @return mixed|boolean
+     * @return mixed
      */
-    public function config($data)
+    abstract protected function getStrategy();
+
+    /**
+     * @param $name
+     * @param $arguments
+     * @return $this
+     * @throws \Exception
+     */
+    public function __call($name, $arguments)
     {
-        if (is_array($data)) {
-            reset($data);
-            $attribute = key($data);
-            $value = current($data);
+        $this->config(['handler' => $name]);
 
-            if (array_key_exists($attribute, $this->config)) {
-                $this->config[$attribute] = $value;
-                return true;
-            }
-            return false;
-        }
-
-
-        return $this->config[$data] ?? null;
+        return $this;
     }
 }
