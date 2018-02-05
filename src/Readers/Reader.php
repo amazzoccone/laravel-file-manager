@@ -3,9 +3,12 @@
 namespace Bondacom\LaravelFileManager\Readers;
 
 use Bondacom\LaravelFileManager\Utilities\Bom;
+use Bondacom\LaravelFileManager\Utilities\Configurable;
 
 abstract class Reader
 {
+    use Configurable;
+
     /**
      * @var File Pointer
      */
@@ -13,9 +16,12 @@ abstract class Reader
 
     /**
      * Reader constructor.
+     * @param array $config
      */
-    public function __construct()
+    public function __construct(array $config)
     {
+        $this->config = $config;
+
         // Fix macOS files
         ini_set('auto_detect_line_endings', true);
     }

@@ -14,8 +14,12 @@ trait Configurable
      * @param string|array $data
      * @return mixed|boolean
      */
-    public function config($data)
+    public function config($data = null)
     {
+        if (is_null($data)) {
+            return $this->config;
+        }
+
         if (is_array($data)) {
             reset($data);
             $attribute = key($data);

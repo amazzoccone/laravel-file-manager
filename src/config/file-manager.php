@@ -31,6 +31,8 @@ return [
     | Chunk: Default number of lines to return in callback.
     */
     'writer' => [
-        'handler' => 'inform'
+        'handler' => 'inform',
+
+        'move_to_s3' => true
     ],
 ];

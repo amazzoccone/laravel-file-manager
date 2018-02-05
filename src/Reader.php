@@ -23,12 +23,14 @@ class Reader extends Utility
     protected function getStrategy()
     {
         $type = $this->config('handler');
+        $config = $this->config();
+        unset($config['handler']);
 
         switch ($type) {
             case 'txt':
-                return app(\Bondacom\LaravelFileManager\Readers\Txt::class);
+                return app(\Bondacom\LaravelFileManager\Readers\Txt::class, $config);
             case 'csv':
-                return app(\Bondacom\LaravelFileManager\Readers\Csv::class);
+                return app(\Bondacom\LaravelFileManager\Readers\Csv::class, $config);
             default:
                 throw new ReaderNotExistsException($type);
         }

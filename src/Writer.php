@@ -23,10 +23,12 @@ class Writer extends Utility
     public function getStrategy()
     {
         $type = $this->config('handler');
+        $config = $this->config();
+        unset($config['handler']);
 
         switch ($type) {
             case 'inform':
-                return app(\Bondacom\LaravelFileManager\Writers\Inform::class);
+                return app(\Bondacom\LaravelFileManager\Writers\Inform::class, $config);
             default:
                 throw new WriterNotExistsException($type);
         }
