@@ -49,4 +49,18 @@ class ReaderTest extends TestCase
         $this->expectException(\Exception::class);
         Reader::csb()->open($filepath);
     }
+
+    /**
+     * @test
+     */
+    public function it_should_pass_config_to_reader_class()
+    {
+        $this->mock(Txt::class)->shouldReceive('open')->once()->andReturnSelf();
+
+        $config = config('file-manager.reader.default');
+        $filepath = getcwd();
+        $reader = Reader::open($filepath);
+
+        $this->assertEquals($reader->config(), $config);
+    }
 }

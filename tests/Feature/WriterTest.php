@@ -48,4 +48,18 @@ class WriterTest extends TestCase
         $this->expectException(\Exception::class);
         Writer::csb()->new($filepath);
     }
+
+    /**
+     * @test
+     */
+    public function it_should_pass_config_to_writer_class()
+    {
+        $this->mock(Inform::class)->shouldReceive('new')->once()->andReturnSelf();
+
+        $config = config('file-manager.writer.default');
+        $filepath = getcwd();
+        $reader = Writer::new($filepath);
+
+        $this->assertEquals($reader->config(), $config);
+    }
 }
