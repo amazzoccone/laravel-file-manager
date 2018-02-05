@@ -20,7 +20,10 @@ return [
     */
     'reader' => [
         'handler' => 'txt',
-        'chunk' => 1
+
+        'default' => [
+            'chunk' => 1
+        ]
     ],
 
     /*
@@ -33,6 +36,8 @@ return [
     'writer' => [
         'handler' => 'inform',
 
-        'move_to_s3' => true
+        'default' => [
+            'move_to_s3' => true
+        ]
     ],
 ];

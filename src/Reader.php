@@ -23,8 +23,7 @@ class Reader extends Utility
     protected function getStrategy()
     {
         $type = $this->config('handler');
-        $config = $this->config();
-        unset($config['handler']);
+        $config = $this->config('default');
 
         switch ($type) {
             case 'txt':

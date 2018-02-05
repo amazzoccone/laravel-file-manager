@@ -77,7 +77,11 @@ abstract class Writer
             return true;
         }
 
-        return $this->moveFileToS3();
+        if ($this->config('move_to_s3')) {
+            return $this->moveFileToS3();
+        }
+
+        return true;
     }
 
     /**

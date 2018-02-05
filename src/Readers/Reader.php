@@ -42,8 +42,10 @@ abstract class Reader
      * @param int $chunkSize
      * @return void
      */
-    public function process(\Closure $closureToProcessLines, $chunkSize = 1)
+    public function process(\Closure $closureToProcessLines, $chunkSize = null)
     {
+        $chunkSize = $chunkSize ?: $this->config('chunk');
+
         $this->assertHasFile();
         rewind($this->file);
 

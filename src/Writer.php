@@ -23,8 +23,7 @@ class Writer extends Utility
     public function getStrategy()
     {
         $type = $this->config('handler');
-        $config = $this->config();
-        unset($config['handler']);
+        $config = $this->config('default');
 
         switch ($type) {
             case 'inform':
