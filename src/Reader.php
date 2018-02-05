@@ -2,6 +2,7 @@
 
 namespace Bondacom\LaravelFileManager;
 
+use Bondacom\Antenna\Exceptions\ReaderNotExistsException;
 use Bondacom\LaravelFileManager\Utilities\Utility;
 
 class Reader extends Utility
@@ -42,7 +43,7 @@ class Reader extends Utility
             case 'csv':
                 return app(\Bondacom\LaravelFileManager\Readers\Csv::class);
             default:
-                throw new \Exception("Reader Handler {$type} does not exists");
+                throw new ReaderNotExistsException($type);
         }
     }
 }

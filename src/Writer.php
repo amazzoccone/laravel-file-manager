@@ -2,6 +2,7 @@
 
 namespace Bondacom\LaravelFileManager;
 
+use Bondacom\Antenna\Exceptions\WriterNotExistsException;
 use Bondacom\LaravelFileManager\Utilities\Utility;
 
 class Writer extends Utility
@@ -40,7 +41,7 @@ class Writer extends Utility
             case 'inform':
                 return app(\Bondacom\LaravelFileManager\Writers\Inform::class);
             default:
-                throw new \Exception("Writer Handler {$type} does not exists");
+                throw new WriterNotExistsException($type);
         }
     }
 }
