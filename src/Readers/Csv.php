@@ -2,7 +2,6 @@
 
 namespace Bondacom\LaravelFileManager\Readers;
 
-//TODO: Should implement an interface
 class Csv extends Reader
 {
     const VALUE_DELIMITER = ',';

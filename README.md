@@ -60,6 +60,14 @@ $writer->add('World');
 $writer->save();
 ```
 
+**Example** - Write a file as csv
+
+```
+$writer = Writer::csv()->new($file)
+$writer->add(['Hello', 'World']);
+$writer->save();
+```
+
 ## Contributing
 
 Check out [contributing guide](https://github.com/bondacom/laravel-file-manager/blob/master/CONTRIBUTING.md) to get an overview of development.
