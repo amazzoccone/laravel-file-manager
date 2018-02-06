@@ -26,8 +26,8 @@ class Writer extends Utility
         $config = $this->config('default');
 
         switch ($type) {
-            case 'inform':
-                return app(\Bondacom\LaravelFileManager\Writers\Inform::class)->setConfig($config);
+            case 'txt':
+                return app(\Bondacom\LaravelFileManager\Writers\Txt::class)->setConfig($config);
             default:
                 throw new WriterNotExistsException($type);
         }

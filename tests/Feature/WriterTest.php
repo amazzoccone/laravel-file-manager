@@ -5,7 +5,7 @@ namespace Bondacom\LaravelFileManager\Tests\Feature;
 use Bondacom\LaravelFileManager\Exceptions\WriterNotExistsException;
 use Bondacom\LaravelFileManager\Facades\Writer;
 use Bondacom\LaravelFileManager\Tests\TestCase;
-use Bondacom\LaravelFileManager\Writers\Inform;
+use Bondacom\LaravelFileManager\Writers\Txt;
 
 class WriterTest extends TestCase
 {
@@ -14,14 +14,14 @@ class WriterTest extends TestCase
      */
     public function it_should_instance_default_writer_class()
     {
-        $mock = $this->mock(Inform::class)
+        $mock = $this->mock(Txt::class)
             ->shouldReceive('setConfig')->once()->andReturnSelf()
             ->shouldReceive('new')->once()->andReturnSelf();
 
         $filepath = getcwd();
         $reader = Writer::new($filepath);
 
-        $this->assertInstanceOf(Inform::class, $reader);
+        $this->assertInstanceOf(Txt::class, $reader);
     }
 
     /**
@@ -29,14 +29,14 @@ class WriterTest extends TestCase
      */
     public function it_should_instance_other_writer_class()
     {
-        $this->mock(Inform::class)
+        $this->mock(Txt::class)
             ->shouldReceive('setConfig')->once()->andReturnSelf()
             ->shouldReceive('new')->once()->andReturnSelf();
 
         $filepath = getcwd();
-        $reader = Writer::inform()->new($filepath);
+        $reader = Writer::txt()->new($filepath);
 
-        $this->assertInstanceOf(Inform::class, $reader);
+        $this->assertInstanceOf(Txt::class, $reader);
     }
 
     /**
