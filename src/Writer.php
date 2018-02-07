@@ -28,6 +28,8 @@ class Writer extends Utility
         switch ($type) {
             case 'txt':
                 return app(\Bondacom\LaravelFileManager\Writers\Txt::class)->setConfig($config);
+            case 'csv':
+                return app(\Bondacom\LaravelFileManager\Writers\Csv::class)->setConfig($config);
             default:
                 throw new WriterNotExistsException($type);
         }
