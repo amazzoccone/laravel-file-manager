@@ -5,11 +5,13 @@ namespace Bondacom\LaravelFileManager\Writers;
 class Csv extends Writer
 {
     /**
-     * @param array $content
+     * @param array $params
      * @return $this
      */
-    public function add(array $content)
+    public function add(...$params)
     {
+        $content = (array)($params[0] ?? []);
+
         fputcsv($this->fp, $content);
 
         return $this;

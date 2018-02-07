@@ -30,6 +30,12 @@ abstract class Writer
     }
 
     /**
+     * @param array $params
+     * @return $this
+     */
+    abstract public function add(...$params);
+
+    /**
      * Create file and directory if not exists
      *
      * @param string $filename (Ex.: imports/test_8439810439.log)
@@ -46,18 +52,6 @@ abstract class Writer
         //      If the file does not exist, attempt to create it. )
         $localFilePath = config('filesystems.disks.local.root') . '/' . $this->filename;
         $this->fp = fopen($localFilePath, "a");
-
-        return $this;
-    }
-
-    /**
-     * @param string $content
-     * @param bool $newLine
-     * @return $this
-     */
-    public function add(string $content, $newLine = true)
-    {
-        fputs($this->fp, $content . ($newLine ? PHP_EOL : ''));
 
         return $this;
     }
