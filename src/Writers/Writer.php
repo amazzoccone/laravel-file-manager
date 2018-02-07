@@ -47,11 +47,9 @@ abstract class Writer
 
         $this->checkDirectoryExists();
 
-        // Create file
         // "a": Open for writing only; place the file pointer at the end of the file.
         //      If the file does not exist, attempt to create it. )
-        $localFilePath = config('filesystems.disks.local.root') . '/' . $this->filename;
-        $this->fp = fopen($localFilePath, "a");
+        $this->fp = fopen($this->filename, "a");
 
         return $this;
     }
@@ -64,11 +62,8 @@ abstract class Writer
         $result = fclose($this->fp);
 
         if (!$result) {
+            Log::error('Cannot close file pointer');
             return false;
-        }
-
-        if (config('filesystems.default') != 's3') {
-            return true;
         }
 
         if ($this->config('move_to_s3')) {
@@ -83,12 +78,15 @@ abstract class Writer
      */
     private function moveFileToS3()
     {
-        $result = Storage::put($this->filename, Storage::disk('local')->get($this->filename));
+        $storageFilename = str_replace(config('filesystems.disks.local.root'), '', $this->filename);
+
+        $result = Storage::disk('s3')->put($storageFilename, $this->filename);
         if (!$result) {
+            Log::error('Cannot move local file to s3');
             return false;
         }
 
-        $deleted = Storage::disk('local')->delete($this->filename);
+        $deleted = unlink($this->filename);
         if (!$deleted) {
             Log::error('Cannot delete local file');
         }
@@ -103,8 +101,8 @@ abstract class Writer
     {
         $path = dirname($this->filename);
 
-        if (!Storage::disk('local')->exists($path)) {
-            Storage::disk('local')->makeDirectory($path);
+        if (!is_dir($path)) {
+            mkdir($path);
         }
 
         return $this;
