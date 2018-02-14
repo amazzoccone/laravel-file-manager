@@ -80,7 +80,7 @@ abstract class Writer
     {
         $storageFilename = str_replace(config('filesystems.disks.local.root'), '', $this->filename);
 
-        $result = Storage::disk('s3')->put($storageFilename, $this->filename);
+        $result = Storage::disk('s3')->put($storageFilename, file_get_contents($this->filename));
         if (!$result) {
             Log::error('Cannot move local file to s3');
             return false;
