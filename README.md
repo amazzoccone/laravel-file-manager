@@ -1,3 +1,8 @@
+[![Build Status](https://travis-ci.org/bondacom/laravel-file-manager.svg?branch=master)](https://travis-ci.org/bondacom/laravel-file-manager)
+[![Latest Stable Version](https://poser.pugx.org/bondacom/laravel-file-manager/v/stable)](https://packagist.org/packages/bondacom/laravel-file-manager)
+[![Total Downloads](https://poser.pugx.org/bondacom/laravel-file-manager/downloads)](https://packagist.org/packages/bondacom/laravel-file-manager)
+[![License](https://poser.pugx.org/bondacom/laravel-file-manager/license)](https://packagist.org/packages/bondacom/laravel-file-manager)
+
 # Laravel File Manager
 
 ###### [FAQ](#faq) | [Contributing](https://github.com/bondacom/laravel-file-manager/blob/master/CONTRIBUTING.md)
