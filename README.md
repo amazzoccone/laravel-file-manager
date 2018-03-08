@@ -2,7 +2,7 @@
 
 ###### [FAQ](#faq) | [Contributing](https://github.com/bondacom/laravel-file-manager/blob/master/CONTRIBUTING.md)
 
-> It's a Laravel library which provides an efficient way to read or create enormous files.
+> Laravel File Manager is a [Bondacom](https://bondacom.com) library which provides an efficient way to read or create enormous files.
 
 ## Getting Started
 
@@ -18,7 +18,7 @@ composer require bondacom/laravel-file-manager
 > **Note**: For Laravel less than 5.5 remember to register manually the service provider!
 
 ### Configuration
-Copy the config file into your project by running
+Copy the config file into your project. For Laravel projects run:
 ```
 php artisan vendor:publish --provider="Bondacom\LaravelFileManager\Providers\LaravelFileManagerServiceProvider"
 ```
@@ -72,8 +72,12 @@ $writer->save();
 
 Check out [contributing guide](https://github.com/bondacom/laravel-file-manager/blob/master/CONTRIBUTING.md) to get an overview of development.
 
-# FAQ
+## FAQ
 
 #### Q: Which PHP and Laravel version does use?
 
 Look for [composer.json](https://github.com/bondacom/laravel-file-manager/blob/master/composer.json).
+
+## License
+
+Laravel File Manager is an open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)

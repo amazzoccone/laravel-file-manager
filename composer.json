@@ -1,6 +1,8 @@
 {
   "name": "bondacom/laravel-file-manager",
   "description": "File manager for Laravel.",
+  "license": "MIT",
+  "keywords": ["file", "reader", "writer"],
   "require": {
     "php": "^7.1"
   },
